@@ -1,0 +1,5 @@
+##include position restraints  in the ITP or the top file for both atom to be pulled and fixed atom
+ [ position_restraints ]
+; ai   funct   fcx    fcy   fcz
+   1     1      41860   41860   0   ; restraints to a point
+   2     1      41860   41860   0   ; restraints to a point

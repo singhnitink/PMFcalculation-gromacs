@@ -1,0 +1,13 @@
+1. First create the solv_ions.gro => use bash Solvate
+2. create index file => gmx_mpi make_ndx -f solv_ions.gro
+3. copy files to specified folders 
+4. bash run_file.sh
+5. bash analysis.sh <= after completion of simulation
+6. Then use wham
+   Go to wham folder and cd distances
+   bash copy.sh ; remember to change the number of lines value in yank.f
+   cd ..
+   bash executewham.sh
+   final file is wham_polished.dat
+   copy it to excel , take the average of last five values and substract it from all
+   

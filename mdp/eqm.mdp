@@ -1,0 +1,95 @@
+;############################################
+; Run parameters
+title                   = PMF calculation production file
+cpp                     = cpp
+define                  = 
+include                 = -I../top
+integrator              = md        ; leap-frog integrator
+nsteps                  = 50000    ; 2 * 50000000 = 1000000 ps (1000 ns)
+dt                      = 0.002     ; 2 fs
+; Output control
+nstxout                 = 0         ; suppress bulky .trr file by specifying 
+nstvout                 = 0         ; 0 for output frequency of nstxout,
+nstfout                 = 0         ; nstvout, and nstfout
+nstcalcenergy           = 250
+nstenergy               = 250      ; save energies every 10.0 ps
+nstlog                  = 2500      ; update log file every 10.0 ps
+nstxout-compressed      = 5000      ; save compressed coordinates every 10.0 ps
+compressed-x-grps       = System    ; save the whole system
+; Bond parameters
+constraint_algorithm    = lincs     ; holonomic constraints 
+constraints             = h-bonds   ; bonds involving H are constrained
+lincs_iter              = 1         ; accuracy of LINCS
+lincs_order             = 4         ; also related to accuracy
+; Neighbor searching and vdW
+cutoff-scheme           = Verlet
+ns_type                 = grid      ; search neighboring grid cells
+nstlist                 = 20        ; largely irrelevant with Verlet
+rlist                   = 1.2
+vdwtype                 = cutoff
+vdw-modifier            = force-switch
+rvdw-switch             = 1.0
+rvdw                    = 1.2       ; short-range van der Waals cutoff (in nm)
+; Electrostatics
+coulombtype             = PME       ; Particle Mesh Ewald for long-range electrostatics
+rcoulomb                = 1.2
+pme_order               = 4         ; cubic interpolation
+fourierspacing          = 0.16      ; grid spacing for FFT
+fourier_nx              = 0
+fourier_ny              = 0
+fourier_nz              = 0
+optimize_fft            = yes
+; Temperature coupling is on
+tcoupl                  = Berendsen             ; modified Berendsen thermostat
+tc-grps                 = System   ; two coupling groups - more accurate
+tau_t                   = 0.2          ; time constant, in ps
+ref_t                   = 300         ; reference temperature, one for each group, in K
+; Pressure coupling is on
+pcoupl                  = Berendsen   ; Pressure coupling on in NPT
+pcoupltype              = isotropic             ; uniform scaling of box vectors
+tau_p                   = 2.0                   ; time constant, in ps
+ref_p                   = 1.0                   ; reference pressure, in bar
+compressibility         = 4.5e-5                ; isothermal compressibility of water, bar^-1
+; Periodic boundary conditions
+pbc                     = xyz       ; 3-D PBC
+; Dispersion correction
+DispCorr                = EnerPres  ; account for cut-off vdW scheme
+; Velocity generation
+; Velocity generation
+gen_vel                 = yes       ; assign velocities from Maxwell distribution
+gen_temp                = 300       ; temperature for Maxwell distribution
+gen_seed                = 103529        ; generate a random seed
+;############################################
+; COM PULLING          
+pull                     = yes
+; Cylinder radius for dynamic reaction force groups (nm)
+pull-cylinder-r          = 1.5
+pull-constr-tol          = 1e-06
+pull-print-com1          = no
+pull-print-com2          = no
+pull-print-ref-value     = no
+pull-print-components    = no
+pull_nstxout             = 250
+pull_nstfout             = 25
+; Number of pull groups 
+pull_ngroups             = 2
+; Number of pull coordinates
+pull-ncoords             = 1
+; Group name, weight (default all 1), vector, init, rate (nm/ps), kJ/(mol*nm^2)
+pull-group1-name         = Pull_group1
+pull-group1-weights      = 
+pull-group1-pbcatom      = 
+pull-group2-name         = Pull_group2
+pull-group2-weights      = 
+pull-group2-pbcatom      = 
+pull-coord1-groups       = 1 2 
+pull-coord1-type         = umbrella
+pull-coord1-geometry     = direction
+pull-coord1-dim          = N N Y
+pull-coord1-origin       = 0.0 0.0 0.0
+pull-coord1-vec          = 0.0 0.0 1.0
+pull-coord1-start        = no
+pull-coord1-init         = XXX
+pull-coord1-rate         = 0
+pull-coord1-k            = 2093
+pull-coord1-kB           = 0

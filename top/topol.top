@@ -1,0 +1,62 @@
+;
+;	File 'topol.top' was generated
+;	By user: singh_nitin (1001)
+;	On host: workstation2
+;	At date: Fri Apr 30 12:34:54 2021
+;
+;	This is a standalone topology file
+;
+;	Created by:
+;	                    :-) GROMACS - gmx pdb2gmx, 2020.1 (-:
+;	
+;	Executable:   /apps/codes/cpu/gromacs/2020/bin/gmx_mpi
+;	Data prefix:  /apps/codes/cpu/gromacs/2020
+;	Working dir:  /data/pc_backup/singh_nitin/new_charmm36/SMD/gromacs_pmf/na_na_pmf
+;	Command line:
+;	  gmx_mpi pdb2gmx -f two_sodium.pdb -o system.gro -water tip3p
+;	Force field was read from current directory or a relative path - path added.
+;
+
+; Include forcefield parameters
+#include "/data/pc_backup/singh_nitin/new_charmm36/SMD/gromacs_pmf/na_na_pmf/charmm36-feb2021.ff/forcefield.itp"
+
+[ moleculetype ]
+; Name            nrexcl
+Other_chain_I       3
+
+[ atoms ]
+;   nr       type  resnr residue  atom   cgnr     charge       mass  typeB    chargeB      massB
+; residue   1 SOD rtp SOD  q +1.0
+     1        SOD      1    SOD    SOD      1          1    22.9898   ; qtot 1
+; residue   2 SOD rtp SOD  q +1.0
+     2        SOD      2    SOD    SOD      2          1    22.9898   ; qtot 2
+[ position_restraints ]
+; ai   funct   fcx    fcy   fcz
+   1     1      41860   41860   0   ; restraints to a point
+   2     1      41860   41860   0   ; restraints to a point
+; Include Position restraint file
+#ifdef POSRES
+#include "posre.itp"
+#endif
+
+; Include water topology
+#include "/data/pc_backup/singh_nitin/new_charmm36/SMD/gromacs_pmf/na_na_pmf/charmm36-feb2021.ff/tip3p.itp"
+
+#ifdef POSRES_WATER
+; Position restraint for each water oxygen
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1       1000       1000       1000
+#endif
+
+; Include topology for ions
+#include "/data/pc_backup/singh_nitin/new_charmm36/SMD/gromacs_pmf/na_na_pmf/charmm36-feb2021.ff/ions.itp"
+
+[ system ]
+; Name
+Sodium in water
+
+[ molecules ]
+; Compound        #mols
+Other_chain_I       1
+SOL              3980

@@ -1,0 +1,5 @@
+Make teo extra indexes at the end of index.ndx file.
+1. [ Pull_group1 ]
+   Index of atom to be held constant
+2. [ Pull_group2 ]
+   Index of atom to be pulled
